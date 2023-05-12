@@ -45,11 +45,12 @@ def add_cards_to_cardstack():
     Card.cardStack.append(Card("Provincial Empire", "Red", 260, 260, 20, 0, 0, 0, 5, None, 0, 6))  
     Card.cardStack.append(Card("Diaspora", "Yellow", 270, 270, 0, 5, 0, 0, 20, None, 0, 6))  
     Card.cardStack.append(Card("Wonder of the World", "Blue and Orange", 290, 290, 0, 20, 0, 20, 0, None, 0, 6))  
-
+    return
 
 def print_cardstack():
     for i in range(len(Card.cardStack)):
-        print(Card.cardStack[i]) 
+        print(f"{i+1}:\n{Card.cardStack[i]}") 
+    return
 
 def buy_card_at_index(index: int):
     ##Redo as a for-loop? 
@@ -83,13 +84,19 @@ def buy_card_at_index(index: int):
             highest_discount = Hand.yellow_discount_total if Hand.yellow_discount_total > Hand.orange_discount_total else Hand.orange_discount_total 
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - highest_discount
 
-        Hand.cardsInHand.append(Card.cardStack[index])
-        Card.cardStack.remove(Card.cardStack[index])
-        
-add_cards_to_cardstack()
-print_cardstack()
-index = int(input("Which card do you want to buy?"))
-buy_card_at_index(index)
+    Hand.cardsInHand.append(Card.cardStack[index])
+    Card.cardStack.remove(Card.cardStack[index])
 
+    for i in range(len(Hand.cardsInHand)):
+        print(Hand.cardsInHand[i])
+    return
+
+add_cards_to_cardstack()
+
+while(True):
+    print_cardstack()
+    index = int(input("Which card do you want to buy?"))
+    buy_card_at_index(index -1)
+    
 
 
