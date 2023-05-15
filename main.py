@@ -73,23 +73,24 @@ def update_card_prices(index: int):
     for i in range(len(Card.cardStack)):
         if Card.cardStack[i].color == "Red":
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - Hand.red_discount_total
-        if Card.cardStack[i].color == "Blue":
+        elif Card.cardStack[i].color == "Blue":
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - Hand.blue_discount_total
-        if Card.cardStack[i].color == "Green":
+        elif Card.cardStack[i].color == "Green":
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - Hand.green_discount_total
-        if Card.cardStack[i].color == "Orange":
+        elif Card.cardStack[i].color == "Orange":
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - Hand.orange_discount_total
-        if Card.cardStack[i].color == "Yellow":
+        elif Card.cardStack[i].color == "Yellow":
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - Hand.yellow_discount_total
-        if Card.cardStack[i].color == "Blue and Yellow":
+        elif Card.cardStack[i].color == "Blue and Yellow":
             highest_discount = Hand.blue_discount_total if Hand.blue_discount_total > Hand.yellow_discount_total else Hand.yellow_discount_total 
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - highest_discount
-        if Card.cardStack[i].color == "Yellow and orange" :
+        elif Card.cardStack[i].color == "Yellow and Orange" :
             highest_discount = Hand.yellow_discount_total if Hand.yellow_discount_total > Hand.orange_discount_total else Hand.orange_discount_total 
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - highest_discount
     return
 
-def buy_card_at_index(index: int):
+def buy_card_at_index():
+    index = int(input("Which card do you want to buy?"))
     update_total_color_discount(index)
     if(Card.cardStack[index].discounted_card != None):
         add_discount_to_specific_card(index)
@@ -100,7 +101,8 @@ def buy_card_at_index(index: int):
     Hand.cardsInHand.append(Card.cardStack[index])
     Card.cardStack.remove(Card.cardStack[index])
 
-    ##Prints all cards in Hand. 
+##Prints all cards in Hand. 
+def print_cards_in_hand():
     for i in range(len(Hand.cardsInHand)):
         print(Hand.cardsInHand[i])
     return
@@ -108,9 +110,19 @@ def buy_card_at_index(index: int):
 add_cards_to_cardstack()
 
 while(True):
-    print_cardstack()
-    index = int(input("Which card do you want to buy?"))
-    buy_card_at_index(index -1)
+    print("\nMain menu")
+    print("1.Print all cards in cardstack")
+    print("2.Print all cards you bought")
+    print("3. Buy a card")
+    userChoice = int(input("Chose an option: "))
+    if userChoice == 1:
+        print_cardstack()
+    elif userChoice == 2:
+        print_cards_in_hand()
+    elif userChoice == 3:
+        buy_card_at_index()
+    else:
+        print("Invalid choice, try again")
     
 
 
