@@ -52,20 +52,24 @@ def print_cardstack():
         print(f"{i+1}:\n{Card.cardStack[i]}") 
     return
 
-def buy_card_at_index(index: int):
-    ##Redo as a for-loop? 
+##Updates the color discounts and victorypoints in Hand. Redo as a for-loop? 
+def update_total_color_discount(index: int):
     Hand.red_discount_total += Card.cardStack[index].red_discount
     Hand.blue_discount_total += Card.cardStack[index].blue_discount
     Hand.green_discount_total += Card.cardStack[index].green_discount
     Hand.orange_discount_total += Card.cardStack[index].orange_discount
     Hand.yellow_discount_total += Card.cardStack[index].yellow_discount
-    Hand.points_total += Card.cardStack[index].victory_points
+    return
 
+##Updates the discount to a specific card if applicable
+def add_discount_to_specific_card(index: int):
     for i in range(len(Card.cardStack)):
         if Card.cardStack[index].discounted_card == Card.cardStack[i].card_name:
             Card.cardStack[i].current_cost = Card.cardStack[i].current_cost - Card.cardStack[index].amount_discounted_card
-            break
-    
+            return
+        
+##Updates the color discunt to all cards in the cardstack. 
+def update_card_prices(index: int):
     for i in range(len(Card.cardStack)):
         if Card.cardStack[i].color == "Red":
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - Hand.red_discount_total
@@ -83,10 +87,20 @@ def buy_card_at_index(index: int):
         if Card.cardStack[i].color == "Yellow and orange" :
             highest_discount = Hand.yellow_discount_total if Hand.yellow_discount_total > Hand.orange_discount_total else Hand.orange_discount_total 
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - highest_discount
+    return
 
+def buy_card_at_index(index: int):
+    update_total_color_discount(index)
+    if(Card.cardStack[index].discounted_card != None):
+        add_discount_to_specific_card(index)
+    update_card_prices(index)
+    
+    #adds victorypoints and moves the bought card from cardstack to hand
+    Hand.points_total += Card.cardStack[index].victory_points
     Hand.cardsInHand.append(Card.cardStack[index])
     Card.cardStack.remove(Card.cardStack[index])
 
+    ##Prints all cards in Hand. 
     for i in range(len(Hand.cardsInHand)):
         print(Hand.cardsInHand[i])
     return
