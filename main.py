@@ -47,10 +47,26 @@ def add_cards_to_cardstack():
     Card.cardStack.append(Card("Wonder of the World", "Blue and Orange", 290, 290, 0, 20, 0, 20, 0, None, 0, 6))  
     return
 
+##Prints all cards in cardstack
 def print_cardstack():
     for i in range(len(Card.cardStack)):
         print(f"{i+1}:\n{Card.cardStack[i]}") 
     return
+
+##Prints all cards in Hand. 
+def print_cards_in_hand():
+    for i in range(len(Hand.cardsInHand)):
+        print(Hand.cardsInHand[i])
+    return
+
+##Loops trough all cards in cardstack and prints all cards the player can afford
+def affordable_cards():
+    amountToSpend = int(input("Money: "))
+    for i in range(len(Card.cardStack)):
+        if Card.cardStack[i].current_cost <= amountToSpend:
+            print(f"{i+1}:\n{Card.cardStack[i]}") 
+    index = int(input("\nWhich card du you want to buy?\n"))
+    return index - 1  
 
 ##Updates the color discounts and victorypoints in Hand. Redo as a for-loop? 
 def update_total_color_discount(index: int):
@@ -73,23 +89,25 @@ def update_card_prices(index: int):
     for i in range(len(Card.cardStack)):
         if Card.cardStack[i].color == "Red":
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - Hand.red_discount_total
-        if Card.cardStack[i].color == "Blue":
+        elif Card.cardStack[i].color == "Blue":
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - Hand.blue_discount_total
-        if Card.cardStack[i].color == "Green":
+        elif Card.cardStack[i].color == "Green":
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - Hand.green_discount_total
-        if Card.cardStack[i].color == "Orange":
+        elif Card.cardStack[i].color == "Orange":
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - Hand.orange_discount_total
-        if Card.cardStack[i].color == "Yellow":
+        elif Card.cardStack[i].color == "Yellow":
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - Hand.yellow_discount_total
-        if Card.cardStack[i].color == "Blue and Yellow":
+        elif Card.cardStack[i].color == "Blue and Yellow":
             highest_discount = Hand.blue_discount_total if Hand.blue_discount_total > Hand.yellow_discount_total else Hand.yellow_discount_total 
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - highest_discount
-        if Card.cardStack[i].color == "Yellow and orange" :
+        elif Card.cardStack[i].color == "Yellow and Orange" :
             highest_discount = Hand.yellow_discount_total if Hand.yellow_discount_total > Hand.orange_discount_total else Hand.orange_discount_total 
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - highest_discount
     return
 
-def buy_card_at_index(index: int):
+##Function containing everyrhing that happens when you buy a card. 
+def buy_card_at_index():
+    index = affordable_cards()
     update_total_color_discount(index)
     if(Card.cardStack[index].discounted_card != None):
         add_discount_to_specific_card(index)
@@ -100,17 +118,23 @@ def buy_card_at_index(index: int):
     Hand.cardsInHand.append(Card.cardStack[index])
     Card.cardStack.remove(Card.cardStack[index])
 
-    ##Prints all cards in Hand. 
-    for i in range(len(Hand.cardsInHand)):
-        print(Hand.cardsInHand[i])
-    return
 
 add_cards_to_cardstack()
 
 while(True):
-    print_cardstack()
-    index = int(input("Which card do you want to buy?"))
-    buy_card_at_index(index -1)
+    print("\nMain menu")
+    print("1.Print all cards in cardstack")
+    print("2.Print all cards you bought")
+    print("3. Buy a card")
+    userChoice = int(input("Chose an option: "))
+    if userChoice == 1:
+        print_cardstack()
+    elif userChoice == 2:
+        print_cards_in_hand()
+    elif userChoice == 3:
+        buy_card_at_index()
+    else:
+        print("Invalid choice, try again")
     
 
 
