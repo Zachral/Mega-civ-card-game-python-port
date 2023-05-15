@@ -47,10 +47,26 @@ def add_cards_to_cardstack():
     Card.cardStack.append(Card("Wonder of the World", "Blue and Orange", 290, 290, 0, 20, 0, 20, 0, None, 0, 6))  
     return
 
+##Prints all cards in cardstack
 def print_cardstack():
     for i in range(len(Card.cardStack)):
         print(f"{i+1}:\n{Card.cardStack[i]}") 
     return
+
+##Prints all cards in Hand. 
+def print_cards_in_hand():
+    for i in range(len(Hand.cardsInHand)):
+        print(Hand.cardsInHand[i])
+    return
+
+##Loops trough all cards in cardstack and prints all cards the player can afford
+def affordable_cards():
+    amountToSpend = int(input("Money: "))
+    for i in range(len(Card.cardStack)):
+        if Card.cardStack[i].current_cost <= amountToSpend:
+            print(f"{i+1}:\n{Card.cardStack[i]}") 
+    index = int(input("\nWhich card du you want to buy?\n"))
+    return index - 1  
 
 ##Updates the color discounts and victorypoints in Hand. Redo as a for-loop? 
 def update_total_color_discount(index: int):
@@ -89,8 +105,9 @@ def update_card_prices(index: int):
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - highest_discount
     return
 
+##Function containing everyrhing that happens when you buy a card. 
 def buy_card_at_index():
-    index = int(input("Which card do you want to buy?"))
+    index = affordable_cards()
     update_total_color_discount(index)
     if(Card.cardStack[index].discounted_card != None):
         add_discount_to_specific_card(index)
@@ -101,11 +118,6 @@ def buy_card_at_index():
     Hand.cardsInHand.append(Card.cardStack[index])
     Card.cardStack.remove(Card.cardStack[index])
 
-##Prints all cards in Hand. 
-def print_cards_in_hand():
-    for i in range(len(Hand.cardsInHand)):
-        print(Hand.cardsInHand[i])
-    return
 
 add_cards_to_cardstack()
 
