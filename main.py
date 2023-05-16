@@ -123,8 +123,7 @@ add_cards_to_cardstack()
 
 while(True):
     print("\nMain menu")
-    print("1.Print all cards in cardstack")
-    print("2.Print all cards you bought")
+    print("2. Show cards in hand")
     print("3. Buy a card")
     userChoice = int(input("Chose an option: "))
     if userChoice == 1:
