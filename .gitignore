@@ -1814,3 +1814,6 @@ venv/lib/python3.10/site-packages/Werkzeug-2.3.4.dist-info/METADATA
 venv/lib/python3.10/site-packages/Werkzeug-2.3.4.dist-info/RECORD
 venv/lib/python3.10/site-packages/Werkzeug-2.3.4.dist-info/top_level.txt
 venv/lib/python3.10/site-packages/Werkzeug-2.3.4.dist-info/WHEEL
+__pycache__/app.cpython-310.pyc
+__pycache__/card.cpython-310.pyc
+__pycache__/classes.cpython-310.pyc
