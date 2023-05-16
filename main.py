@@ -1,3 +1,7 @@
+from flask import Flask
+
+app = Flask(__name__)
+
 class Card:
 
     def __init__(self, card_name, color, current_cost, original_cost, 
@@ -31,6 +35,10 @@ class Hand(Card):
     points_total = 0
 
     cardsInHand = []
+
+    def show_discounts(self):
+        return f"Discounts:\nRed: {self.red_discount_total}  Blue: {self.blue_discount_total}    Green: {self.green_discount_total}  Orange: {self.orange_discount_total}    Yellow: {self.yellow_discount_total}    VP: {self.points_total}"
+
 
 
 def add_cards_to_cardstack():
@@ -118,22 +126,26 @@ def buy_card_at_index():
     Hand.cardsInHand.append(Card.cardStack[index])
     Card.cardStack.remove(Card.cardStack[index])
 
+@app.route("/")
+def index():
 
-add_cards_to_cardstack()
+    add_cards_to_cardstack()
 
-while(True):
-    print("\nMain menu")
-    print("2. Show cards in hand")
-    print("3. Buy a card")
-    userChoice = int(input("Chose an option: "))
-    if userChoice == 1:
-        print_cardstack()
-    elif userChoice == 2:
-        print_cards_in_hand()
-    elif userChoice == 3:
-        buy_card_at_index()
-    else:
-        print("Invalid choice, try again")
+    while(True):
+        return Hand.show_discounts(Hand) + "\nMain menu" + "\nShow cards in hand" + "\n3. Buy a card"
+        
+        """ userChoice = int(input("Chose an option: "))
+        if userChoice == 1:
+            print_cardstack()
+        elif userChoice == 2:
+            print_cards_in_hand()
+        elif userChoice == 3:
+            buy_card_at_index()
+        else:
+            print("Invalid choice, try again")
+ """
+if __name__ == "__main__":
+    app.run(host="127.0.0.1", port=8080, debug=True)
     
 
 
