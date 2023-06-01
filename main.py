@@ -1,4 +1,4 @@
-from flask import Flask, request 
+from flask import Flask, request, render_template, Response, request, redirect, url_for
 from app import create_app
 from classes import Card, Hand
 
@@ -25,7 +25,7 @@ def print_cardstack():
     return
 
 ##Prints all cards in Hand. 
-@app.route("/in_hand", methods=['POST'])
+@app.route("/in_hand/", methods=['POST'])
 def print_cards_in_hand():
     for i in range(len(Hand.cardsInHand)):
         print(Hand.cardsInHand[i])
@@ -78,6 +78,7 @@ def update_card_prices(index: int):
     return
 
 ##Function containing everyrhing that happens when you buy a card. 
+@app.route("/buy/", methods=['POST'])
 def buy_card_at_index():
     index = affordable_cards()
     update_total_color_discount(index)
@@ -96,18 +97,18 @@ def index():
     add_cards_to_cardstack()
 
     while(True):
-        if request.method == 'POST':
-            if request.form.get('show_hand') == 'Show cards in hand':
-                print_cards_in_hand()
-            elif  request.form.get('buy_cards') == 'Buy card':
-                buy_card_at_index()
-        else:        
-            return Hand.show_discounts(Hand) + """<form method="post">
-            <p><input type=submit value="Show cards in hand" name=show_hand>
-            <p><input type=submit value=Buy card name=buy_card>
-            </form>"""
+        # if request.method == 'POST':
+        #     if request.form.get('show_hand') == 'Show cards in hand':
+        #         print_cards_in_hand()
+        #     elif  request.form.get('buy_cards') == 'Buy card':
+        #         buy_card_at_index()
+        # else:        
+             return Hand.show_discounts(Hand) + render_template('index.html') #"""<form method="post">
+            # <p><input type=submit value="Show cards in hand" name=show_hand>
+            # <p><input type=submit value=Buy card name=buy_card>
+            # </form>"""
         
-        """ userChoice = int(input("Chose an option: "))
+    """ userChoice = int(input("Chose an option: "))
         if userChoice == 1:
             print_cardstack()
         elif userChoice == 2:

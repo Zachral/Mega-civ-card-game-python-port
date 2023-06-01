@@ -3,7 +3,7 @@ import os
 from flask import Flask
 
 def create_app(test_config=None):
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True, template_folder='template')
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
