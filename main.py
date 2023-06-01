@@ -15,7 +15,7 @@ def add_cards_to_cardstack():
     Card.cardStack.append(Card("Mining ", "Orange", 230, 230, 0, 0, 5, 20, 0, None, 0, 6))  
     Card.cardStack.append(Card("Provincial Empire", "Red", 260, 260, 20, 0, 0, 0, 5, None, 0, 6))  
     Card.cardStack.append(Card("Diaspora", "Yellow", 270, 270, 0, 5, 0, 0, 20, None, 0, 6))  
-    Card.cardStack.append(Card("Wonder of the World", "Blue and Orange", 290, 290, 0, 20, 0, 20, 0, None, 0, 6))    
+    Card.cardStack.append(Card("Wonder of the World", "Blue and Orange", 290, 290, 0, 20, 0, 20, 0, None, 0, 6))     
     return
 
 ##Prints all cards in cardstack
@@ -30,10 +30,10 @@ def print_cards_in_hand():
     return render_template('inHand.html', len = len(Hand.cardsInHand), cardsInHand = Hand.cardsInHand)
 
 ##Loops trough all cards in cardstack and prints all cards the player can afford
-def affordable_cards():
-    amountToSpend = int(input("Money: "))
+def affordable_cards(money):
+    amountToSpend = money
     for i in range(len(Card.cardStack)):
-        if Card.cardStack[i].current_cost <= amountToSpend:
+        if Card.cardStack[i].current_cost <= money:
             print(f"{i+1}:\n{Card.cardStack[i]}") 
     index = int(input("\nWhich card du you want to buy?\n"))
     return index - 1  
@@ -76,9 +76,9 @@ def update_card_prices(index: int):
     return
 
 ##Function containing everyrhing that happens when you buy a card. 
-@app.route("/buy/", methods=['POST'])
-def buy_card_at_index():
-    index = affordable_cards()
+@app.route("/buy/<int:money>", methods=['POST'])
+def buy_card_at_index(money):
+    index = affordable_cards(money)
     update_total_color_discount(index)
     if(Card.cardStack[index].discounted_card != None):
         add_discount_to_specific_card(index)
