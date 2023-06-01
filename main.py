@@ -27,8 +27,6 @@ def print_cardstack():
 ##Prints all cards in Hand. 
 @app.route("/in_hand/", methods=['POST'])
 def print_cards_in_hand():
-    # for i in range(len(Hand.cardsInHand)):
-    #     print(Hand.cardsInHand[i])
     return render_template('inHand.html', len = len(Hand.cardsInHand), cardsInHand = Hand.cardsInHand)
 
 ##Loops trough all cards in cardstack and prints all cards the player can afford
