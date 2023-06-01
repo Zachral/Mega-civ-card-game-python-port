@@ -1,6 +1,8 @@
-from flask import Flask
+from flask import Flask, request 
 from app import create_app
 from classes import Card, Hand
+
+app = create_app()
 
 def add_cards_to_cardstack():
     Card.cardStack.append(Card("Cloth Making", "Orange", 50, 50, 0, 5, 0, 10, 0, "Naval Warfare", 10, 1))
@@ -23,6 +25,7 @@ def print_cardstack():
     return
 
 ##Prints all cards in Hand. 
+@app.route("/in_hand", methods=['POST'])
 def print_cards_in_hand():
     for i in range(len(Hand.cardsInHand)):
         print(Hand.cardsInHand[i])
@@ -87,17 +90,22 @@ def buy_card_at_index():
     Hand.cardsInHand.append(Card.cardStack[index])
     Card.cardStack.remove(Card.cardStack[index])
 
-app = create_app()
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def index():
 
     add_cards_to_cardstack()
 
     while(True):
-        return Hand.show_discounts(Hand) + """<form method="post">
+        if request.method == 'POST':
+            if request.form.get('show_hand') == 'Show cards in hand':
+                print_cards_in_hand()
+            elif  request.form.get('buy_cards') == 'Buy card':
+                buy_card_at_index()
+        else:        
+            return Hand.show_discounts(Hand) + """<form method="post">
             <p><input type=submit value="Show cards in hand" name=show_hand>
             <p><input type=submit value=Buy card name=buy_card>
-        </form>"""
+            </form>"""
         
         """ userChoice = int(input("Chose an option: "))
         if userChoice == 1:
