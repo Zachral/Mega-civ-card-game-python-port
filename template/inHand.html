@@ -1,0 +1,18 @@
+<!doctype html>
+
+<head>
+    <title>Your cards</title>
+</head>
+<body>
+  
+<ol>
+<!-- For loop logic of jinja template -->
+{%for i in range(0, len)%}
+  
+    <li>{{cardsInHand[i]}}</li>
+{%endfor%}
+  
+</ol>
+  
+</body>
+</html>
