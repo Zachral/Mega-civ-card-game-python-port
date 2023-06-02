@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__, template_folder='template')
 
@@ -37,6 +37,15 @@ class Hand(Card):
 
     def show_discounts(self):
         return f"Discounts:\nRed: {self.red_discount_total}  Blue: {self.blue_discount_total}    Green: {self.green_discount_total}  Orange: {self.orange_discount_total}    Yellow: {self.yellow_discount_total}    VP: {self.points_total}"
+    
+    def reset(self):
+            self.red_discount_total = 0
+            self.blue_discount_total = 0
+            self.green_discount_total = 0
+            self.orange_discount_total = 0
+            self.yellow_discount_total = 0
+            self.points_total = 0
+            self.cardsInHand.clear()
 
 def add_cards_to_cardstack():
     Card.cardStack.append(Card("Cloth Making", "Orange", 50, 50, 0, 5, 0, 10, 0, "Naval Warfare", 10, 1))
@@ -145,23 +154,33 @@ def buy_card():
         return Hand.show_discounts(Hand) + render_template('buy_card.html', affordable_cards=affordable_cards)
     return Hand.show_discounts(Hand) + render_template('buy_card.html')
 
-
+## fixa att fel kort köps pgra for-loopen
 @app.route('/buy_card_at_index', methods=['POST'])
 def buy_card_at_index():
     selected_cards = request.form.getlist('selected_card')
     
-    
-    for index in range(len(selected_cards)):
-        update_total_color_discount(index)
-        if Card.cardStack[index].discounted_card is not None:
-            add_discount_to_specific_card(index)
-        update_card_prices(index)
+    for selected_card_name in selected_cards:
+        for index, card in enumerate(Card.cardStack):
+            if card.card_name == selected_card_name: 
+                update_total_color_discount(index)
+                if Card.cardStack[index].discounted_card is not None:
+                    add_discount_to_specific_card(index)
+                update_card_prices(index)
 
-        Hand.points_total += Card.cardStack[index].victory_points
-        Hand.cardsInHand.append(Card.cardStack[index])
-        Card.cardStack.remove(Card.cardStack[index])
-
+                Hand.points_total += Card.cardStack[index].victory_points
+                Hand.cardsInHand.append(Card.cardStack[index])
+                Card.cardStack.remove(Card.cardStack[index])
+                break
     return Hand.show_discounts(Hand) + render_template('buy_card.html')
+
+@app.route('/reset', methods=['POST'])
+def reset():
+   
+    Hand.reset(Hand) 
+    Card.cardStack.clear()
+    add_cards_to_cardstack()
+
+    return redirect(url_for('main_menu'))
 
 if __name__ == '__main__':
     app.run()

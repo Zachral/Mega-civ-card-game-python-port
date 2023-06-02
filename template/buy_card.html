@@ -14,7 +14,7 @@
     <form action="{{ url_for('buy_card_at_index') }}" method="POST">
         <h2>Affordable Cards:</h2>
         {% for index, card in affordable_cards %}
-        <input type="checkbox" id="card{{ index }}" name="selected_card" value="{{ card.current_cost }}">
+        <input type="checkbox" id="card{{ index }}" name="selected_card" value="{{ card.card_name }}">
         <label for="card{{ index }}">{{ card.card_name }} - Cost: {{ card.current_cost }}</label><br>
         {% endfor %}
         <button type="submit">Buy Selected Card</button>
