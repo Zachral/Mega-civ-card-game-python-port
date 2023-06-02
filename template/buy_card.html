@@ -2,6 +2,17 @@
 <html>
 <head>
     <title>Buy Card</title>
+    <script>
+        function updateAmountToSpend(checkbox) {
+            var cost = parseInt(checkbox.getAttribute('data-cost'));
+            var currentAmount = parseInt(document.getElementById("amountToSpend").textContent);
+            if (checkbox.checked) {
+                document.getElementById("amountToSpend").textContent = currentAmount - cost;
+            } else {
+                document.getElementById("amountToSpend").textContent = currentAmount + cost;
+            }
+        }
+    </script>
 </head>
 <body>
     <h1>Buy Card</h1>
@@ -11,10 +22,12 @@
         <button type="submit">Find Affordable Cards</button>
     </form>
     {% if affordable_cards %}
+    <p>Money to spend: <span id="amountToSpend">{{ amountToSpend }}</span></p>
     <form action="{{ url_for('buy_card_at_index') }}" method="POST">
         <h2>Affordable Cards:</h2>
         {% for index, card in affordable_cards %}
-        <input type="checkbox" id="card{{ index }}" name="selected_card" value="{{ card.card_name }}">
+        <input type="checkbox" id="card{{ index }}" name="selected_card" 
+            value="{{ card.card_name }}" data-cost="{{ card.current_cost }}" onchange="updateAmountToSpend(this)">  
         <label for="card{{ index }}">{{ card.card_name }} - Cost: {{ card.current_cost }}</label><br>
         {% endfor %}
         <button type="submit">Buy Selected Card</button>

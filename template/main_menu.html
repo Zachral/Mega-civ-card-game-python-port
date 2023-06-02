@@ -6,7 +6,7 @@
 <body>
     <h1>Main Menu</h1>
     <ul>
-        <li><a href="{{ url_for('show_cards_in_hand') }}">Print all cards you bought</a></li>
+        <li><a href="{{ url_for('show_cards_in_hand') }}">Show cards in hand</a></li>
         <li><a href="{{ url_for('buy_card') }}">Buy a card</a></li>
 
         <form action="{{ url_for('reset') }}" method="POST">
