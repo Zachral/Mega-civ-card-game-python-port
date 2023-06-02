@@ -1,0 +1,23 @@
+<!doctype html>
+
+<head>
+    <title>Cards you can afford</title>
+</head>
+<body>
+  
+
+<!-- For loop logic of jinja template -->
+{%for i in range(0, len)%}
+    {%if money >= cardCost[i].current_cost%}
+    <form action = /bought/ method="post"> 
+        <button name= "bought" type="submit"> 
+            {{cardStack[i]}}
+        </button> 
+    </form>
+    {%endif%}
+{%endfor%}
+  
+</ol>
+  
+</body>
+</html>

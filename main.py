@@ -30,13 +30,9 @@ def print_cards_in_hand():
     return render_template('inHand.html', len = len(Hand.cardsInHand), cardsInHand = Hand.cardsInHand)
 
 ##Loops trough all cards in cardstack and prints all cards the player can afford
-def affordable_cards(money):
-    amountToSpend = money
-    for i in range(len(Card.cardStack)):
-        if Card.cardStack[i].current_cost <= money:
-            print(f"{i+1}:\n{Card.cardStack[i]}") 
-    index = int(input("\nWhich card du you want to buy?\n"))
-    return index - 1  
+def affordable_cards():
+    money = int(request.form['money'])
+    return render_template('canBuy.html', len = len(Card.cardStack), cardCost = Card.cardStack, money = money, cardStack = Card.cardStack)
 
 ##Updates the color discounts and victorypoints in Hand. Redo as a for-loop? 
 def update_total_color_discount(index: int):
@@ -55,7 +51,7 @@ def add_discount_to_specific_card(index: int):
             return
         
 ##Updates the color discunt to all cards in the cardstack. 
-def update_card_prices(index: int):
+def update_card_prices():
     for i in range(len(Card.cardStack)):
         if Card.cardStack[i].color == "Red":
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - Hand.red_discount_total
@@ -74,20 +70,25 @@ def update_card_prices(index: int):
             highest_discount = Hand.yellow_discount_total if Hand.yellow_discount_total > Hand.orange_discount_total else Hand.orange_discount_total 
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - highest_discount
     return
+@app.route("/bought/", methods=['POST'])
+def bought_card():
+    index = int(request.form[''])
 
 ##Function containing everyrhing that happens when you buy a card. 
-@app.route("/buy/<int:money>", methods=['POST'])
-def buy_card_at_index(money):
-    index = affordable_cards(money)
-    update_total_color_discount(index)
-    if(Card.cardStack[index].discounted_card != None):
-        add_discount_to_specific_card(index)
-    update_card_prices(index)
+@app.route("/buy/", methods=['POST'])
+def buy_card_at_index():
+    # affordable_cards()
+    # update_total_color_discount(index)
+    # if(Card.cardStack[index].discounted_card != None):
+    #     add_discount_to_specific_card(index)
+    # update_card_prices()
     
     #adds victorypoints and moves the bought card from cardstack to hand
-    Hand.points_total += Card.cardStack[index].victory_points
-    Hand.cardsInHand.append(Card.cardStack[index])
-    Card.cardStack.remove(Card.cardStack[index])
+    # Hand.points_total += Card.cardStack[index].victory_points
+    # Hand.cardsInHand.append(Card.cardStack[index])
+    # Card.cardStack.remove(Card.cardStack[index])
+    money = int(request.form['money'])
+    return render_template('canBuy.html', len = len(Card.cardStack), cardCost = Card.cardStack, money = money, cardStack = Card.cardStack)
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
