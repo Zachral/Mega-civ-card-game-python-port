@@ -148,15 +148,18 @@ def buy_card():
 
 @app.route('/buy_card_at_index', methods=['POST'])
 def buy_card_at_index():
-    index = int(request.form['card'])
-    update_total_color_discount(index)
-    if Card.cardStack[index].discounted_card is not None:
-        add_discount_to_specific_card(index)
-    update_card_prices(index)
+    selected_cards = request.form.getlist('selected_card')
+    
+    
+    for index in range(len(selected_cards)):
+        update_total_color_discount(index)
+        if Card.cardStack[index].discounted_card is not None:
+            add_discount_to_specific_card(index)
+        update_card_prices(index)
 
-    Hand.points_total += Card.cardStack[index].victory_points
-    Hand.cardsInHand.append(Card.cardStack[index])
-    Card.cardStack.remove(Card.cardStack[index])
+        Hand.points_total += Card.cardStack[index].victory_points
+        Hand.cardsInHand.append(Card.cardStack[index])
+        Card.cardStack.remove(Card.cardStack[index])
 
     return Hand.show_discounts(Hand) + render_template('buy_card.html')
 
