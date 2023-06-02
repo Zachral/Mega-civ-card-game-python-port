@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cards in Hand</title>
+</head>
+<body>
+    <h1>Cards in Hand</h1>
+    <ul>
+        {% for card in cards %}
+        <li>
+            <p>Name: {{ card.card_name }}</p>
+            <p>Color: {{ card.color }}</p>
+            <p>Cost: {{ card.current_cost }}</p>
+            <p>Red discount: {{ card.red_discount }}</p>
+            <p>Blue discount: {{ card.blue_discount }}</p>
+            <p>Green discount: {{ card.green_discount }}</p>
+            <p>Orange discount: {{ card.orange_discount }}</p>
+            <p>Yellow discount: {{ card.yellow_discount }}</p>
+            <p>Discounted card: {{ card.discounted_card }}</p>
+            <p>Discount amount: {{ card.amount_discounted_card }}</p>
+            <p>Victory points: {{ card.victory_points }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('main_menu') }}">Return to Main Menu</a>
+</body>
+</html>

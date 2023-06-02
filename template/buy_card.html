@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buy Card</title>
+</head>
+<body>
+    <h1>Buy Card</h1>
+    <form action="{{ url_for('buy_card') }}" method="POST">
+        <label for="money">Money:</label>
+        <input type="text" id="money" name="money" placeholder="Enter money amount">
+        <button type="submit">Find Affordable Cards</button>
+    </form>
+    {% if affordable_cards %}
+    <form action="{{ url_for('buy_card_at_index') }}" method="POST">
+        <h2>Affordable Cards:</h2>
+        {% for index, card in affordable_cards %}
+        <input type="radio" id="card{{ index }}" name="card" value="{{ index }}">
+        <label for="card{{ index }}">{{ card.card_name }} - Cost: {{ card.current_cost }}</label><br>
+        {% endfor %}
+        <button type="submit">Buy Selected Card</button>
+    </form>
+    {% endif %}
+    <a href="{{ url_for('main_menu') }}">Return to Main Menu</a>
+</body>
+</html>
