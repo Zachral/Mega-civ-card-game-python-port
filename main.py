@@ -67,11 +67,38 @@ def add_cards_to_cardstack():
     Card.cardStack.append(Card("Metalworking", "Orange", 90, 90, 5, 0, 0, 10, 0, "Military", 10, 1))
     Card.cardStack.append(Card("Architecture", "Blue", 140, 140, 0, 10, 5, 0, 0, "Mining", 20, 3))  
     Card.cardStack.append(Card("Naval Warfare", "Red", 160, 160, 10, 0, 0, 5, 0,"Diaspora", 20, 3))  
-    Card.cardStack.append(Card("Monument", "Yellow and Orange", 180, 180, 0, 0, 0, 10, 10, "Wonder of the World", 20, 3))  
-    Card.cardStack.append(Card("Mining ", "Orange", 230, 230, 0, 0, 5, 20, 0, None, 0, 6))  
+    Card.cardStack.append(Card("Monument", "Yellow and Orange", 180, 180, 0, 0, 0, 10, 10, "Wonder of the World", 20, 3))
+    Card.cardStack.append(Card("Diplomacy", "Blue", 160, 160, 5, 10, 0, 0, 0, "Provincial Empire", 20, 3))
+    Card.cardStack.append(Card("Law", "Red", 150, 150, 10, 0, 0, 0, 5, "Cultural Ascendancy", 20, 3))
+    Card.cardStack.append(Card("Cartography", "Green", 160, 160, 0, 5, 10, 0, 0, "Library", 20, 3))
+    Card.cardStack.append(Card("Agriculture", "Orange", 120, 120, 0, 0, 5, 10, 0, "Democracy", 20, 3))      
+    Card.cardStack.append(Card("Engineering", "Orange and Green", 160, 160, 0, 0, 10, 10, 0, "Roadbuildning", 20, 3)) 
+    Card.cardStack.append(Card("Literacy", "Blue and Red", 110, 110, 10, 10, 5, 5, 5, "Mathematics", 20, 3))
+    Card.cardStack.append(Card("Medicine", "Green", 140, 140, 0, 0, 10, 5, 0, "Anatomy", 20, 3))
+    Card.cardStack.append(Card("Fundamentalism", "Yellow", 150, 150, 0, 5, 0, 0, 10, "Monotheism", 20, 3))
+    Card.cardStack.append(Card("Universal Doctrine", "Yellow", 160, 160, 5, 0, 0, 0, 10, "Theology", 20, 3))
+    Card.cardStack.append(Card("Rhetoric", "Blue", 130, 130, 5, 10, 0, 0, 0, "Politics", 20, 3))
+    Card.cardStack.append(Card("Cartography", "Green", 180, 180, 5, 0, 10, 0, 0, "Public Works", 20, 3))
+    Card.cardStack.append(Card("Enlightenment", "Yellow", 160, 160, 0, 0, 0, 5, 10, "Philosophy", 20, 3))
+    Card.cardStack.append(Card("Trade Routes", "Orange", 180, 180, 0, 0, 0, 10, 5, "Trade Empire", 20, 3))
+    Card.cardStack.append(Card("Military", "Red", 170, 170, 10, 0, 0, 5, 0, "Advanced Military", 20, 3))
+    Card.cardStack.append(Card("Mining", "Orange", 230, 230, 0, 0, 5, 20, 0, None, 0, 6))  
     Card.cardStack.append(Card("Provincial Empire", "Red", 260, 260, 20, 0, 0, 0, 5, None, 0, 6))  
     Card.cardStack.append(Card("Diaspora", "Yellow", 270, 270, 0, 5, 0, 0, 20, None, 0, 6))  
-    Card.cardStack.append(Card("Wonder of the World", "Blue and Orange", 290, 290, 0, 20, 0, 20, 0, None, 0, 6))  
+    Card.cardStack.append(Card("Wonder of the World", "Blue and Orange", 290, 290, 0, 20, 0, 20, 0, None, 0, 6))
+    Card.cardStack.append(Card("Cultural Ascendency", "Blue", 280, 280, 0, 20, 0, 0, 5, None, 0, 6))    
+    Card.cardStack.append(Card("Library", "Green", 220, 220, 0, 5, 20, 0, 0, None, 0, 6))
+    Card.cardStack.append(Card("Democracy", "Red", 220, 220, 20, 5, 0, 0, 0, None, 0, 6))    
+    Card.cardStack.append(Card("Roadbuilding", "Orange", 230, 230, 0, 0, 5, 20, 0, None, 0, 6))  
+    Card.cardStack.append(Card("Mathematics", "Blue and Green", 250, 250, 10, 20, 20, 10, 10, None, 0, 6))  
+    Card.cardStack.append(Card("Anatomy", "Green", 270, 270, 0, 0, 20, 5, 0, None, 0, 6))
+    Card.cardStack.append(Card("Monotheism", "Yellow", 230, 230, 5, 0, 0, 0, 20, None, 0, 6))
+    Card.cardStack.append(Card("Theology", "Yellow", 250, 250, 0, 0, 5, 0, 20, None, 0, 6))      
+    Card.cardStack.append(Card("Politics", "Blue", 230, 230, 0, 20, 0, 0, 5, None, 0, 6)) 
+    Card.cardStack.append(Card("Philosophy", "Yellow and Green", 220, 220, 0, 0, 20, 0, 20, None, 0, 6)) 
+    Card.cardStack.append(Card("Public Works", "Red", 230, 230, 20, 0, 0, 5, 0, None, 0, 6))   
+    Card.cardStack.append(Card("Trade Empire", "Orange", 260, 260, 5, 0, 0, 20, 0, None, 0, 6)) 
+    Card.cardStack.append(Card("Advanced Military", "Red", 240, 240, 20, 0, 5, 0, 0, None, 0, 6)) 
     return
 
 def print_cardstack():
@@ -129,6 +156,18 @@ def update_card_prices(index: int):
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - highest_discount
         elif Card.cardStack[i].color == "Yellow and Orange" :
             highest_discount = Hand.yellow_discount_total if Hand.yellow_discount_total > Hand.orange_discount_total else Hand.orange_discount_total 
+            Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - highest_discount
+        elif Card.cardStack[i].color == "Blue and Red":
+            highest_discount = Hand.blue_discount_total if Hand.blue_discount_total > Hand.red_discount_total else Hand.red_discount_total 
+            Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - highest_discount
+        elif Card.cardStack[i].color == "Orange and Green" :
+            highest_discount = Hand.green_discount_total if Hand.green_discount_total > Hand.orange_discount_total else Hand.orange_discount_total 
+            Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - highest_discount
+        elif Card.cardStack[i].color == "Blue and Green":
+            highest_discount = Hand.blue_discount_total if Hand.blue_discount_total > Hand.green_discount_total else Hand.green_discount_total 
+            Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - highest_discount
+        elif Card.cardStack[i].color == "Yellow and Green" :
+            highest_discount = Hand.yellow_discount_total if Hand.yellow_discount_total > Hand.green_discount_total else Hand.green_discount_total 
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - highest_discount
         elif Card.cardStack[i].color == "Blue and Orange":
             highest_discount = Hand.blue_discount_total if Hand.blue_discount_total > Hand.orange_discount_total else Hand.orange_discount_total 
