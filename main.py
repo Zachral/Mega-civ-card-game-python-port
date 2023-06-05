@@ -101,23 +101,11 @@ def add_cards_to_cardstack():
     Card.cardStack.append(Card("Advanced Military", "Red", 240, 240, 20, 0, 5, 0, 0, None, 0, 6)) 
     return
 
-# def print_cardstack():
-#     for i in range(len(Card.cardStack)):
-#         print(f"{i+1}:\n{Card.cardStack[i]}") 
-#     return
-
 def print_cards_in_hand():
     for i in range(len(Hand.cardsInHand)):
         print(Hand.cardsInHand[i])
     return
 
-# def affordable_cards():
-#     amountToSpend = int(input("Money: "))
-#     for i in range(len(Card.cardStack)):
-#         if Card.cardStack[i].current_cost <= amountToSpend:
-#             print(f"{i+1}:\n{Card.cardStack[i]}") 
-#     index = int(input("\nWhich card du you want to buy?\n"))
-#     return index - 1
 
 def update_total_color_discount(index: int):
     Hand.red_discount_total += Hand.cardsInHand[index].red_discount
@@ -175,18 +163,6 @@ def update_card_prices(index: int):
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - highest_discount
     return
 
-# def buy_card_at_index():
-#     index = affordable_cards()
-#     update_total_color_discount(index)
-#     if(Card.cardStack[index].discounted_card != None):
-#         add_discount_to_specific_card(index)
-#     update_card_prices(index)
-    
-#     #adds victorypoints and moves the bought card from cardstack to hand
-#     Hand.points_total += Card.cardStack[index].victory_points
-#     Hand.cardsInHand.append(Card.cardStack[index])
-#     Card.cardStack.remove(Card.cardStack[index])
-
 add_cards_to_cardstack()
 
 @app.route('/')
@@ -202,14 +178,6 @@ def show_cards_in_hand():
 def buy_card():
     if request.method == 'POST':
         amountToSpend = int(request.form['money'])
-        # Hand.red_discount_total = 0
-        # Hand.blue_discount_total = 0
-        # Hand.green_discount_total = 0
-        # Hand.orange_discount_total = 0
-        # Hand.yellow_discount_total = 0
-        # for card in range(len(Hand.cardsInHand)):
-        #     if card > 0:
-        #         update_total_color_discount(card)
         affordable_cards = []
         for i in range(len(Card.cardStack)):
             if Card.cardStack[i].current_cost <= amountToSpend:
