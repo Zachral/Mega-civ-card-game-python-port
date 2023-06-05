@@ -55,7 +55,7 @@ def add_cards_to_cardstack():
     Card.cardStack.append(Card("Monarchy", "Red", 60, 60, 10, 0, 0, 0, 5, "Law", 10, 1))
     Card.cardStack.append(Card("Written Record", "Red and Green", 60, 60, 5, 0, 5, 0, 0, "Cartography", 10, 1))  
     Card.cardStack.append(Card("Pottery", "Orange", 60, 60, 0, 5, 0, 10, 0, "Agriculture", 10, 1))
-    Card.cardStack.append(Card("Masonry", "Orange", 60, 60, 0, 0, 5, 10, 0, "Engeneering", 10, 1))
+    Card.cardStack.append(Card("Masonry", "Orange", 60, 60, 0, 0, 5, 10, 0, "Engineering", 10, 1))
     Card.cardStack.append(Card("Mythology", "Yellow", 60, 60, 0, 5, 0, 0, 10, "Literacy", 10, 1))
     Card.cardStack.append(Card("Empiricism", "Green", 60, 60, 5, 5, 10, 5, 5, "Medicin", 10, 1))
     Card.cardStack.append(Card("Deism", "Yellow", 70, 70, 0, 0, 0, 10, 5, "Fundamentalism", 10, 1))
@@ -101,23 +101,23 @@ def add_cards_to_cardstack():
     Card.cardStack.append(Card("Advanced Military", "Red", 240, 240, 20, 0, 5, 0, 0, None, 0, 6)) 
     return
 
-def print_cardstack():
-    for i in range(len(Card.cardStack)):
-        print(f"{i+1}:\n{Card.cardStack[i]}") 
-    return
+# def print_cardstack():
+#     for i in range(len(Card.cardStack)):
+#         print(f"{i+1}:\n{Card.cardStack[i]}") 
+#     return
 
 def print_cards_in_hand():
     for i in range(len(Hand.cardsInHand)):
         print(Hand.cardsInHand[i])
     return
 
-def affordable_cards():
-    amountToSpend = int(input("Money: "))
-    for i in range(len(Card.cardStack)):
-        if Card.cardStack[i].current_cost <= amountToSpend:
-            print(f"{i+1}:\n{Card.cardStack[i]}") 
-    index = int(input("\nWhich card du you want to buy?\n"))
-    return index - 1
+# def affordable_cards():
+#     amountToSpend = int(input("Money: "))
+#     for i in range(len(Card.cardStack)):
+#         if Card.cardStack[i].current_cost <= amountToSpend:
+#             print(f"{i+1}:\n{Card.cardStack[i]}") 
+#     index = int(input("\nWhich card du you want to buy?\n"))
+#     return index - 1
 
 def update_total_color_discount(index: int):
     Hand.red_discount_total += Hand.cardsInHand[index].red_discount
@@ -129,9 +129,10 @@ def update_total_color_discount(index: int):
 
 def add_discount_to_specific_card(index: int):
     for i in range(len(Card.cardStack)):
-        if Card.cardStack[index].discounted_card == Card.cardStack[i].card_name:
-            Card.cardStack[i].current_cost = Card.cardStack[i].current_cost - Card.cardStack[index].amount_discounted_card
+        if Hand.cardsInHand[index].discounted_card == Card.cardStack[i].card_name:
+            Card.cardStack[i].original_cost = Card.cardStack[i].original_cost - Hand.cardsInHand[index].amount_discounted_card
             return
+
 
 def update_card_prices(index: int):
     for i in range(len(Card.cardStack)):
@@ -227,9 +228,9 @@ def buy_card_at_index():
                 Hand.cardsInHand.append(Card.cardStack[index])
                 for i,cardInHand in enumerate(Hand.cardsInHand):
                     if cardInHand.card_name == selected_card_name:
+                        add_discount_to_specific_card(i)
                         update_total_color_discount(i)
-                if Card.cardStack[index].discounted_card is not None:
-                    add_discount_to_specific_card(index)
+                        # if Hand.cardsInHand[i].discounted_card is not None:
                 update_card_prices(index)
                 Card.cardStack.remove(Card.cardStack[index])
                 Hand.points_total += Card.cardStack[index].victory_points
