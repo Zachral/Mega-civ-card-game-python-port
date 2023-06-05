@@ -45,6 +45,8 @@
     
     </form>
     {% endif %}
-    <a href="{{ url_for('main_menu') }}">Return to Main Menu</a>
+    <form action="{{ url_for('main_menu') }}" method="GET">
+        <button type="submit" class="button">Return to main menu</button>
+    </form>
 </body>
 </html>
