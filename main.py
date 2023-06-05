@@ -123,9 +123,9 @@ def add_discount_to_specific_card(index: int):
 def discount_management(selected_card_name: str, index: int):
     for i,cardInHand in enumerate(Hand.cardsInHand):
         if cardInHand.card_name == selected_card_name:
-            add_discount_to_specific_card(i)
+            update_total_color_discount(i)
             if Hand.cardsInHand[i].discounted_card is not None:
-                update_total_color_discount(i)
+                add_discount_to_specific_card(i)  
     update_card_prices(index)
     return
 
