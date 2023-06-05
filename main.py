@@ -144,6 +144,7 @@ def buy_card():
         for i in range(len(Card.cardStack)):
             if Card.cardStack[i].current_cost <= amountToSpend:
                 affordable_cards.append((i, Card.cardStack[i]))
+        affordable_cards = sorted(affordable_cards, key=lambda x: x[1].current_cost)
         return Hand.show_discounts(Hand) + render_template('buy_card.html', affordable_cards=affordable_cards, amountToSpend = amountToSpend)
     return Hand.show_discounts(Hand) + render_template('buy_card.html')
 
