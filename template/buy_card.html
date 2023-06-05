@@ -11,6 +11,17 @@
             } else {
                 document.getElementById("amountToSpend").textContent = currentAmount + cost;
             }
+            enableSubmit(document.getElementById("button"));
+
+
+        function enableSubmit(button){
+            var currentAmount = parseInt(document.getElementById("amountToSpend").textContent); 
+            if (currentAmount < 0){
+                button.disabled = true;
+            }else{
+                button.disabled = false; 
+            }
+        }
         }
     </script>
 </head>
@@ -30,7 +41,8 @@
             value="{{ card.card_name }}" data-cost="{{ card.current_cost }}" onchange="updateAmountToSpend(this)">  
         <label for="card{{ index }}">{{ card.card_name }} - Cost: {{ card.current_cost }}</label><br>
         {% endfor %}
-        <button type="submit">Buy Selected Card</button>
+        <button type="submit" id= "button" onclick="enableSubmit(this)">Buy Selected Card</button> 
+    
     </form>
     {% endif %}
     <a href="{{ url_for('main_menu') }}">Return to Main Menu</a>
