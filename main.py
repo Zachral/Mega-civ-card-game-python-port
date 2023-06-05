@@ -106,7 +106,6 @@ def print_cards_in_hand():
         print(Hand.cardsInHand[i])
     return
 
-
 def update_total_color_discount(index: int):
     Hand.red_discount_total += Hand.cardsInHand[index].red_discount
     Hand.blue_discount_total += Hand.cardsInHand[index].blue_discount
@@ -121,6 +120,14 @@ def add_discount_to_specific_card(index: int):
             Card.cardStack[i].original_cost = Card.cardStack[i].original_cost - Hand.cardsInHand[index].amount_discounted_card
             return
 
+def discount_management(selected_card_name: str, index: int):
+    for i,cardInHand in enumerate(Hand.cardsInHand):
+        if cardInHand.card_name == selected_card_name:
+            add_discount_to_specific_card(i)
+            if Hand.cardsInHand[i].discounted_card is not None:
+                update_total_color_discount(i)
+    update_card_prices(index)
+    return
 
 def update_card_prices(index: int):
     for i in range(len(Card.cardStack)):
@@ -185,7 +192,6 @@ def buy_card():
         return Hand.show_discounts(Hand) + render_template('buy_card.html', affordable_cards=affordable_cards, amountToSpend = amountToSpend)
     return Hand.show_discounts(Hand) + render_template('buy_card.html')
 
-
 @app.route('/buy_card_at_index', methods=['POST'])
 def buy_card_at_index():
     selected_cards = request.form.getlist('selected_card')
@@ -194,12 +200,7 @@ def buy_card_at_index():
         for index, card in enumerate(Card.cardStack):
             if card.card_name == selected_card_name: 
                 Hand.cardsInHand.append(Card.cardStack[index])
-                for i,cardInHand in enumerate(Hand.cardsInHand):
-                    if cardInHand.card_name == selected_card_name:
-                        add_discount_to_specific_card(i)
-                        update_total_color_discount(i)
-                        # if Hand.cardsInHand[i].discounted_card is not None:
-                update_card_prices(index)
+                discount_management(selected_card_name, index)
                 Card.cardStack.remove(Card.cardStack[index])
                 Hand.points_total += Card.cardStack[index].victory_points
                 break
