@@ -35,3 +35,12 @@ class Hand(Card):
 
     def show_discounts(self):
         return f"Discounts:\nRed: {self.red_discount_total}  Blue: {self.blue_discount_total}    Green: {self.green_discount_total}  Orange: {self.orange_discount_total}    Yellow: {self.yellow_discount_total}    VP: {self.points_total}"
+
+    def reset(self):
+            self.red_discount_total = 0
+            self.blue_discount_total = 0
+            self.green_discount_total = 0
+            self.orange_discount_total = 0
+            self.yellow_discount_total = 0
+            self.points_total = 0
+            self.cardsInHand.clear()
