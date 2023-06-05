@@ -120,11 +120,11 @@ def affordable_cards():
     return index - 1
 
 def update_total_color_discount(index: int):
-    Hand.red_discount_total += Card.cardStack[index].red_discount
-    Hand.blue_discount_total += Card.cardStack[index].blue_discount
-    Hand.green_discount_total += Card.cardStack[index].green_discount
-    Hand.orange_discount_total += Card.cardStack[index].orange_discount
-    Hand.yellow_discount_total += Card.cardStack[index].yellow_discount
+    Hand.red_discount_total += Hand.cardsInHand[index].red_discount
+    Hand.blue_discount_total += Hand.cardsInHand[index].blue_discount
+    Hand.green_discount_total += Hand.cardsInHand[index].green_discount
+    Hand.orange_discount_total += Hand.cardsInHand[index].orange_discount
+    Hand.yellow_discount_total += Hand.cardsInHand[index].yellow_discount
     return
 
 def add_discount_to_specific_card(index: int):
@@ -206,8 +206,9 @@ def buy_card():
         # Hand.green_discount_total = 0
         # Hand.orange_discount_total = 0
         # Hand.yellow_discount_total = 0
-        for card in range(len(Hand.cardsInHand)):
-            update_total_color_discount(card)
+        # for card in range(len(Hand.cardsInHand)):
+        #     if card > 0:
+        #         update_total_color_discount(card)
         affordable_cards = []
         for i in range(len(Card.cardStack)):
             if Card.cardStack[i].current_cost <= amountToSpend:
@@ -215,7 +216,7 @@ def buy_card():
         return Hand.show_discounts(Hand) + render_template('buy_card.html', affordable_cards=affordable_cards, amountToSpend = amountToSpend)
     return Hand.show_discounts(Hand) + render_template('buy_card.html')
 
-## fixa att fel kort köps pgra for-loopen
+
 @app.route('/buy_card_at_index', methods=['POST'])
 def buy_card_at_index():
     selected_cards = request.form.getlist('selected_card')
@@ -223,14 +224,15 @@ def buy_card_at_index():
     for selected_card_name in selected_cards:
         for index, card in enumerate(Card.cardStack):
             if card.card_name == selected_card_name: 
-                update_total_color_discount(index)
+                Hand.cardsInHand.append(Card.cardStack[index])
+                for i,cardInHand in enumerate(Hand.cardsInHand):
+                    if cardInHand.card_name == selected_card_name:
+                        update_total_color_discount(i)
                 if Card.cardStack[index].discounted_card is not None:
                     add_discount_to_specific_card(index)
                 update_card_prices(index)
-
-                Hand.points_total += Card.cardStack[index].victory_points
-                Hand.cardsInHand.append(Card.cardStack[index])
                 Card.cardStack.remove(Card.cardStack[index])
+                Hand.points_total += Card.cardStack[index].victory_points
                 break
     return Hand.show_discounts(Hand) + render_template('buy_card.html')
 
