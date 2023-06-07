@@ -159,8 +159,14 @@ def buy_card_at_index():
                 discount_management(selected_card_name, index)
                 Card.cardStack.remove(Card.cardStack[index])
                 Hand.points_total += Card.cardStack[index].victory_points
+                if selected_card_name == "Written Record" or selected_card_name == "Monument" or selected_card_name =="Library":
+                    return Hand.show_discounts(Hand) + render_template('extra_discount.html', discount_card = selected_card_name)
                 break
     return Hand.show_discounts(Hand) + render_template('buy_card.html')
+
+@app.route('/apply_extra_discount', methods=['POST'])
+def apply_extra_discount():
+    return Hand.show_discounts(Hand) + render_template('main_menu.html')
 
 @app.route('/reset', methods=['POST'])
 def reset():
