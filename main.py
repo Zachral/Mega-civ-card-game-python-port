@@ -81,10 +81,10 @@ def discount_management(selected_card_name: str, index: int):
             update_total_color_discount(i)
             if Hand.cardsInHand[i].discounted_card is not None:
                 add_discount_to_specific_card(i)  
-    update_card_prices(index)
+    update_card_prices()
     return
 
-def update_card_prices(index: int):
+def update_card_prices():
     for i in range(len(Card.cardStack)):
         if Card.cardStack[i].color == "Red":
             Card.cardStack[i].current_cost = Card.cardStack[i].original_cost - Hand.red_discount_total
@@ -166,6 +166,19 @@ def buy_card_at_index():
 
 @app.route('/apply_extra_discount', methods=['POST'])
 def apply_extra_discount():
+    discounted_color = request.form.get('discount_color')
+    amount = int(request.form.get('discount_amount'))
+    if discounted_color == "red":
+        Hand.red_discount_total += amount
+    elif discounted_color =="blue":
+        Hand.blue_discount_total += amount
+    elif discounted_color =="green":
+        Hand.green_discount_total += amount
+    elif discounted_color =="orange":
+        Hand.orange_discount_total += amount
+    elif discounted_color =="yellow":
+        Hand.orange_discount_total += amount
+    update_card_prices()
     return Hand.show_discounts(Hand) + render_template('main_menu.html')
 
 @app.route('/reset', methods=['POST'])

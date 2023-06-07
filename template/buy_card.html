@@ -6,9 +6,11 @@
         function updateAmountToSpend(checkbox) {
             var cost = parseInt(checkbox.getAttribute('data-cost'));
             var currentAmount = parseInt(document.getElementById("amountToSpend").textContent);
-            if (checkbox.checked) {
+            if (checkbox.checked){
+                if (cost > 0)
                 document.getElementById("amountToSpend").textContent = currentAmount - cost;
             } else {
+                if (cost > 0 )
                 document.getElementById("amountToSpend").textContent = currentAmount + cost;
             }
             enableSubmit(document.getElementById("button"));

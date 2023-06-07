@@ -5,19 +5,23 @@
 </head>
 <body>
     <form action="{{ url_for('apply_extra_discount') }}" method="POST">
-    <h1>Choose discounted color</h1>
-    {% if discount_card == "Written Record" %}
-        <p>Add 10 discount to: </p>
-    {% elif discount_card == "Monument" %}
-        <p>Add 20 discount to: </p>
-    {% else %}
-        <p>Add 30 discount to: </p>
-    {% endif %}
-    <input type="radio" id="discount_color_red" name="discount_color">- Red<br>
-    <input type="radio" id="discount_color_blue" name="discount_color">- Blue<br>
-    <input type="radio" id="discount_color_green" name="discount_color">- Green<br>
-    <input type="radio" id="discount_color_orange" name="discount_color">- Orange<br>
-    <input type="radio" id="discount_color_yellow" name="discount_color">- Yellow<br>
-    <button type="submit">Apply Discount</button>
+        <h1>Choose discounted color</h1>
+        {% if discount_card == "Written Record" %}
+            <input type="hidden" value='10' name='discount_amount'>
+            <p>Add 10 discount to: </p>
+        {% elif discount_card == "Monument" %}
+            <input type="hidden" value='20' name='discount_amount'>
+            <p>Add 20 discount to: </p>
+        {% else %}
+            <input type="hidden" value='30' name='discount_amount'>
+            <p>Add 30 discount to: </p>
+        {% endif %}
+        <input type="radio" id="discount_color_red" name="discount_color" value="red">- Red<br>
+        <input type="radio" id="discount_color_blue" name="discount_color" value="blue">- Blue<br>
+        <input type="radio" id="discount_color_green" name="discount_color" value="green">- Green<br>
+        <input type="radio" id="discount_color_orange" name="discount_color" value="orange">- Orange<br>
+        <input type="radio" id="discount_color_yellow" name="discount_color" value="yellow">- Yellow<br>
+        <button type="submit">Apply Discount</button>
+    </form>
 </body>
 </html>
