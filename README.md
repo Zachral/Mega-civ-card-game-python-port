@@ -3,6 +3,7 @@
 An app to keep track of your cards, discounts and victory points when you play Western empiers, Eastern empiers or Mega civilization
 You need to have a physical copy of the deck of cards when using the app. 
 
+It seems to be some bugs when using chorme or edge, works best in firefox.
 Link to the app page:
 https://cardmanager-386912.lm.r.appspot.com
 
