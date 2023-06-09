@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Cards in Hand</title>
 </head>
 <body>
     <h1>Cards in Hand</h1>
-    <ul>
         {% for card in cards %}
-        <li>
-            <p>Name: {{ card.card_name }}</p>
-            <p>Color: {{ card.color }}</p>
-            <p>Cost: {{ card.current_cost }}</p>
-            <p>Red discount: {{ card.red_discount }}</p>
-            <p>Blue discount: {{ card.blue_discount }}</p>
-            <p>Green discount: {{ card.green_discount }}</p>
-            <p>Orange discount: {{ card.orange_discount }}</p>
-            <p>Yellow discount: {{ card.yellow_discount }}</p>
-            <p>Discounted card: {{ card.discounted_card }}</p>
-            <p>Discount amount: {{ card.amount_discounted_card }}</p>
-            <p>Victory points: {{ card.victory_points }}</p>
-        </li>
+            <p>Name: {{ card.card_name }}
+            Color: {{ card.color }}
+            Cost: {{ card.current_cost }}
+            Red discount: {{ card.red_discount }}
+            Blue discount: {{ card.blue_discount }}
+            Green discount: {{ card.green_discount }}
+            Orange discount: {{ card.orange_discount }}
+            Yellow discount: {{ card.yellow_discount }}
+            Discounted card: {{ card.discounted_card }}
+            Discount amount: {{ card.amount_discounted_card }}
+            Victory points: {{ card.victory_points }}</p>
         {% endfor %}
     </ul>
     <form action="{{ url_for('main_menu') }}" method="GET">
-        <button type="submit" class="button">Return to main menu</button>
+        <button type="submit" class="submit-button">Return to main menu</button>
     </form>
 </body>
 </html>

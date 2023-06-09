@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Buy Card</title>
     <script>
         function updateAmountToSpend(checkbox) {
@@ -30,9 +31,10 @@
 <body>
     <h1>Buy Card</h1>
     <form action="{{ url_for('buy_card') }}" method="POST">
-        <label for="money">Money:</label>
-        <input type="text" id="money" name="money" placeholder="Enter amount">
-        <button type="submit">Find Affordable Cards</button>
+        <label for="money" class="text">Money:</label>
+        <input type="text" id="money" class="text-input" name="money" placeholder="Enter amount">
+        <br>
+        <button type="submit" class="submit-button">Find Affordable Cards</button>
     </form>
     {% if affordable_cards %}
     <p>Money to spend: <span id="amountToSpend">{{ amountToSpend }}</span></p>
@@ -43,11 +45,11 @@
             value="{{ card.card_name }}" data-cost="{{ card.current_cost }}" onchange="updateAmountToSpend(this)">  
         <label for="card{{ index }}">{{ card.card_name }} - Cost: {{ card.current_cost }}</label><br>
         {% endfor %}
-        <button type="submit" id= "button" onclick="enableSubmit(this)">Buy Selected Card</button> 
+        <button type="submit" id= "button" class="submit-button" onclick="enableSubmit(this)">Buy Selected Card</button> 
     </form>
     {% endif %}
     <form action="{{ url_for('main_menu') }}" method="GET">
-        <button type="submit" class="button">Return to main menu</button>
+        <button type="submit" class="submit-button">Return to main menu</button>
     </form>
 </body>
 </html>
