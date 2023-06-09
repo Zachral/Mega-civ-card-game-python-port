@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:200i,400&display=swap');
+ :root {
+  --whitecolor: rgba(255,255,255, 0.9); 
+}
+body{
+  font-family: "Poppins", helvetica; 
+}
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  background-color: black; 
+  background-image: linear-gradient(
+      135deg,
+      rgba(35, 58, 158, 0.8),
+      rgba(255,255,255, 0.4)
+    ),
+    url(https://media.s-bol.com/NL8A3zvxyxML/1200x731.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.8
+}
+
+h1{
+  opacity: 0.8;
+  padding: 0.5rem 0.1rem;
+  border-radius: 0.25rem; 
+  width: 73%; 
+  margin-left: 13.5%; 
+  text-align: center;
+}
+h2{
+  font-size: medium;
+  opacity: 0.8;
+  padding: 0.5rem 0.1rem;
+  border-radius: 0.25rem; 
+  width: 73%; 
+  text-align: left;
+}
+footer{
+  font-size: 12px; 
+  text-align: right;
+  color: grey; 
+}
+form {
+  background: var(--whitecolor); 
+  opacity: 0.8;
+  padding: 2.5rem 0.1rem;
+  border-radius: 0.25rem; 
+  width: 73%; 
+  margin-left: 13.5%; 
+}
+.submit-button {
+  margin-left: 25%;
+  width: 50%;
+  padding: 0.75rem;
+  background: lightgreen;
+  color: inherit;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-family: "Poppins", helvetica;
+  font-size: 18px; 
+}
+button:disabled{
+  margin-left: 25%;
+  width: 50%;
+  padding: 0.75rem;
+  background: rgb(48, 81, 48);
+  color: inherit;
+  border-radius: 0.25rem;
+  cursor: not-allowed;
+  font-family: "Poppins", helvetica;
+  font-size: 18px; 
+}
+.text-input{
+  margin-left: 18.2%;
+  width: 50%;
+  padding: 0.75rem;
+  background: rgba(239, 245, 239, 0.088);
+  color: inherit;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-family: "Poppins", helvetica;
+  font-size: 18px; 
+}
+.text{
+  font-size: 20px; 
+  text-align: left;
+  color: inherit;
+}
+p{
+  background: var(--whitecolor); 
+  opacity: 0.8;
+  padding: 1.5rem 0.1rem;
+  border-radius: 0.25rem; 
+  width: 73%; 
+  margin-left: 13.5%; 
+}
