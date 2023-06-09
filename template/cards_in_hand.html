@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Cards in Hand</title>
 </head>
@@ -19,7 +22,6 @@
             Discount amount: {{ card.amount_discounted_card }}
             Victory points: {{ card.victory_points }}</p>
         {% endfor %}
-    </ul>
     <form action="{{ url_for('main_menu') }}" method="GET">
         <button type="submit" class="submit-button">Return to main menu</button>
     </form>

@@ -151,6 +151,7 @@ def buy_card():
 @app.route('/buy_card_at_index', methods=['POST'])
 def buy_card_at_index():
     selected_cards = request.form.getlist('selected_card')
+    extra_discount_cards = []
     
     for selected_card_name in selected_cards:
         for index, card in enumerate(Card.cardStack):
@@ -160,8 +161,11 @@ def buy_card_at_index():
                 Card.cardStack.remove(Card.cardStack[index])
                 Hand.points_total += Card.cardStack[index].victory_points
                 if selected_card_name == "Written Record" or selected_card_name == "Monument" or selected_card_name =="Library":
-                    return Hand.show_discounts(Hand) + render_template('extra_discount.html', discount_card = selected_card_name)
-                break
+                    extra_discount_cards.append(selected_card_name)
+    
+    for card_name in extra_discount_cards:
+        return Hand.show_discounts(Hand) + render_template('extra_discount.html', discount_card=card_name)
+    
     return Hand.show_discounts(Hand) + render_template('buy_card.html')
 
 @app.route('/apply_extra_discount', methods=['POST'])

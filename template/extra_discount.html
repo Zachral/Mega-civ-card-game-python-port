@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Color discount</title>
 </head>
@@ -9,20 +12,20 @@
         <h1>Choose discounted color</h1>
         {% if discount_card == "Written Record" %}
             <input type="hidden" value='10' name='discount_amount'>
-            <p>Add 10 discount to: </p>
+            <h2>Add 10 discount to: </h2>
         {% elif discount_card == "Monument" %}
             <input type="hidden" value='20' name='discount_amount'>
-            <p>Add 20 discount to: </p>
+            <h2>Add 20 discount to: </h2>
         {% else %}
             <input type="hidden" value='30' name='discount_amount'>
-            <p>Add 30 discount to: </p>
+            <h2>Add 30 discount to: </h2>
         {% endif %}
         <input type="radio" id="discount_color_red" name="discount_color" value="red">- Red<br>
         <input type="radio" id="discount_color_blue" name="discount_color" value="blue">- Blue<br>
         <input type="radio" id="discount_color_green" name="discount_color" value="green">- Green<br>
         <input type="radio" id="discount_color_orange" name="discount_color" value="orange">- Orange<br>
         <input type="radio" id="discount_color_yellow" name="discount_color" value="yellow">- Yellow<br>
-        <button type="submit">Apply Discount</button>
+        <button type="submit"  class="submit-button">Apply Discount</button>
     </form>
 </body>
 </html>
